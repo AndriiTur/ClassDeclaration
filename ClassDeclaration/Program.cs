@@ -10,6 +10,7 @@ namespace ClassDeclaration
     {
         static void Main(string[] args)
         {
+            #region PersonM
             List<Person> Persons = new List<Person>();
 
             Person myPerson1 = new Person();
@@ -63,9 +64,102 @@ namespace ClassDeclaration
 
             Console.WriteLine("\npress any key..");
             Console.ReadKey();
+            #endregion
+
+            #region CarM
+            string newColor;
+            Car[] cars = new Car[3];
+
+            for (int i = 0; i < cars.Length; i++)
+            {
+                cars[i] = new Car();
+                cars[i].Input();
+            }
+
+            for (int i = 0; i < cars.Length; i++)
+            {
+                cars[i].ChangePrice(10);
+                cars[i].Print();
+            }
+
+            Console.WriteLine("\nEnter color: ");
+            newColor = Console.ReadLine();
+            for (int i = 0; i < cars.Length; i++)
+            {
+                if (cars[i].Color == "white")
+                    cars[i].Color = newColor;
+            }
+
+            Console.WriteLine("\npress any key..");
+            Console.ReadKey();
+            #endregion
+
         }
     }
 
+    #region Car
+    class Car
+    {
+        const string CompanyName = "New auto-mark";
+
+        string name;
+        string color;
+        double price;
+
+        public string Color { get; set; }
+
+        public Car()
+        {
+
+        }
+
+        public Car(string name, string color, double price)
+        {
+            this.name = name;
+            this.color = color;
+            this.price = price;
+        }
+
+        public void Input()
+        {
+            Console.Write("Enter car mark: ");
+            this.name = Console.ReadLine();
+
+            Console.Write("Enter car color: ");
+            this.color = Console.ReadLine();
+
+            Console.Write("Enter car price: ");
+            this.price = double.Parse(Console.ReadLine());  
+        }
+
+        public void Print()
+        {
+            Console.WriteLine($"\nCar mark: {this.name} \nEnter car color: {this.color} \nEnter car price: {this.price}");
+        }
+
+        public override string ToString()
+        {
+            return $"\nCar mark: {this.name} \nEnter car color: {this.color} \nEnter car price: {this.price}";
+        }
+
+        public void ChangePrice(double percent)
+        {
+            this.price = this.price - (percent / 100 * this.price);
+        }
+
+        public static bool operator ==(Car first, Car second)
+        {
+            return first.name == second.name && first.price == second.price;
+        }
+
+        public static bool operator !=(Car first, Car second)
+        {
+            return !(first.name == second.name && first.price == second.price);
+        }
+    }
+    #endregion
+
+    #region Person
     class Person
     {
         private string name;
@@ -123,4 +217,5 @@ namespace ClassDeclaration
             return !(first.Name == second.Name);
         }
     }
+    #endregion
 }
